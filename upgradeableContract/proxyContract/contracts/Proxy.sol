@@ -13,7 +13,7 @@ contract Proxy is Storage{
     //when error happens in the current working functional contract, call
     // upgrade() to change to new functional contract address without
     //losing current state
-    function udgrade(address _newAddress) public{
+    function upgrade(address _newAddress) public{
         currentAddress = _newAddress;
     }
 
