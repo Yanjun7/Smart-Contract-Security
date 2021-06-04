@@ -24,7 +24,9 @@ module.exports = async function(deployer, network, accounts){
     numOfDogs = await proxyDog.getNumberOfDogs();
     console.log("Number of dogs in proxy contract storage after upgrading: "+numOfDogs.toNumber());
 
-    await proxyDog.setNumberOfDogs(3); 
-    // for the current setting this will failed with the setNumberOfDogs() function having a onlyOwner modifier
-    // we're using the delegatecall() to redirect requests from proxy to dog, that's why we're using proxy's state not dog's
+    proxyDog = await DogUpgraded.at(proxy.address); // fool truffle once again
+    proxyDog.initialize(accounts[0]);
+    await proxyDog.setNumberOfDogs(30); 
+    numOfDogs = await proxyDog.getNumberOfDogs();
+    console.log("Number of dogs in proxy contract storage after upgrading and fixing owership: "+numOfDogs.toNumber());
 }
